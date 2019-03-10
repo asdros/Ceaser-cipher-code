@@ -17,7 +17,7 @@ namespace Caesar_cipher
 
             foreach (string element in BeforeConversion)
             {
-                char[] TempWord = new char[element.Length];
+                char[] TempWord = new char[element.Length]; 
                 for (int j = 0; j < element.Length; j++)
                 {
                     char ASCIICodeOfChar = element[j];
@@ -43,36 +43,43 @@ namespace Caesar_cipher
         }
         public void PrintResults()
         {
+            Console.WriteLine("\nText after converting");
             for (int i = 0; i < AfterConversion.Count; i++)
             {
                 Console.WriteLine($"{BeforeConversion[i]}\t{AfterConversion[i]}");
             }
+            BeforeConversion.Clear();       //clear buffor 
+            AfterConversion.Clear();
         }
 
         public static void Main()
         {
             Core core = new Core();
-            bool status = false;    //menu in loop
+            bool status = false;    // control menu in loop
             string temp;
 
             Console.WriteLine("\t\t\tCaesar cipher\n");
+            Console.WriteLine("Input words to encoding.\nPlease write '0' if you want to finish entering words.\n");
+            Console.WriteLine("\nIf you want to leave the program, enter \"exit\"\n");
+
             while (status == false)
             {
-
-                Console.WriteLine("Input words to encoding.\nPlease write '0' if you want to finish entering words.");
                 temp = Console.ReadLine();
-                if (temp == "0")
+                switch (temp)
                 {
-                    status = true;
-                    core.MainConverter();
+                    case "0":
+                        core.MainConverter();
+                        core.PrintResults();
+                        break;
+                    case "exit":
+                        status = true;
+                        break;
+                    default:
+                        core.Reader(temp.ToUpper());
+                        break;
                 }
-                else
-                {
-                    core.Reader(temp.ToUpper());
-                }
-                Console.Clear();
+                Console.ReadKey();
             }
-            Console.ReadKey();
         }
     }
 }
